@@ -1,0 +1,253 @@
+/* ==========================================
+   COLORS - change these to re-theme the app
+   ========================================== */
+:root {
+  --bg: #ffffff;          /* page background */
+  --text: #111111;        /* text color */
+  --border: #111111;      /* all box borders */
+  --tile: #e6e6e6;        /* video tile background */
+  --highlight: #d8d8d8;   /* hover + your chat bubbles */
+  --off: #f2c4c4;         /* muted / camera-off buttons */
+
+  --border-width: 2px;
+  --gap: 8px;
+  --chat-width: 300px;
+
+  color-scheme: light dark;
+}
+
+/* Dark mode (delete this block if you only want light) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1a1a1a;
+    --text: #eeeeee;
+    --border: #eeeeee;
+    --tile: #2c2c2c;
+    --highlight: #3a3a3a;
+    --off: #6b2f2f;
+  }
+}
+
+
+/* ==========================================
+   BASE
+   ========================================== */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--text);
+  font: 15px/1.4 Arial, Helvetica, sans-serif;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+
+/* ==========================================
+   HEADER (meeting title + timer)
+   ========================================== */
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: var(--border-width) solid var(--border);
+}
+
+
+/* ==========================================
+   MAIN AREA (videos on left, chat on right)
+   ========================================== */
+main {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+
+/* ==========================================
+   VIDEO GRID
+   ========================================== */
+#videos {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);   /* number of columns */
+  grid-auto-rows: 1fr;
+  gap: var(--gap);
+  padding: var(--gap);
+  overflow: auto;
+}
+
+.tile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+  background: var(--tile);
+  border: var(--border-width) solid var(--border);
+}
+
+.tile video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Name label in the bottom-left corner of a tile */
+.tile .name {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: 2px 8px;
+  background: var(--bg);
+  border-top: var(--border-width) solid var(--border);
+  border-right: var(--border-width) solid var(--border);
+}
+
+/* Letter box shown when the camera is off */
+.avatar {
+  display: none;
+  z-index: 1;
+  padding: 16px 22px;
+  font-size: 22px;
+  background: var(--highlight);
+  border: var(--border-width) solid var(--border);
+}
+
+.tile.off .avatar {
+  display: block;
+}
+
+
+/* ==========================================
+   CHAT PANEL
+   ========================================== */
+#chat {
+  display: flex;
+  flex-direction: column;
+  width: var(--chat-width);
+  min-height: 0;
+  border-left: var(--border-width) solid var(--border);
+}
+
+#chat h2 {
+  margin: 0;
+  padding: 8px 12px;
+  font-size: 15px;
+  border-bottom: var(--border-width) solid var(--border);
+}
+
+/* Scrollable list of messages */
+#msgs {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: var(--gap);
+  overflow: auto;
+}
+
+.msg {
+  max-width: 90%;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+}
+
+.msg b {
+  display: block;
+  font-size: 12px;
+}
+
+/* Your own messages: right side + shaded */
+.msg.me {
+  align-self: flex-end;
+  background: var(--highlight);
+}
+
+/* Input row at the bottom of the chat */
+#chatform {
+  display: flex;
+  border-top: var(--border-width) solid var(--border);
+}
+
+#chatform input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px;
+  font: inherit;
+  color: var(--text);
+  background: var(--bg);
+  border: 0;
+}
+
+#chatform button {
+  border: 0;
+  border-left: var(--border-width) solid var(--border);
+}
+
+
+/* ==========================================
+   BUTTONS
+   ========================================== */
+button {
+  padding: 8px 14px;
+  font: inherit;
+  color: var(--text);
+  background: var(--bg);
+  border: var(--border-width) solid var(--border);
+  border-radius: 0;            /* square corners */
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--highlight);
+}
+
+/* Applied by JS when mic is muted / camera is off */
+button.off {
+  background: var(--off);
+}
+
+
+/* ==========================================
+   FOOTER (control bar)
+   ========================================== */
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gap);
+  padding: var(--gap);
+  border-top: var(--border-width) solid var(--border);
+}
+
+
+/* ==========================================
+   MOBILE (screens 700px wide or less)
+   ========================================== */
+@media (max-width: 700px) {
+  main {
+    flex-direction: column;
+  }
+
+  #chat {
+    width: auto;
+    height: 40%;
+    border-left: 0;
+    border-top: var(--border-width) solid var(--border);
+  }
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Meet</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Top bar: meeting name + timer -->
+  <header>
+    <span>Team standup</span>
+    <span id="clock">00:00</span>
+  </header>
+
+  <main>
+
+    <!-- Video tiles are added here by script.js -->
+    <section id="videos"></section>
+
+    <!-- Chat panel -->
+    <aside id="chat">
+      <h2>Chat</h2>
+
+      <!-- Messages are added here by script.js -->
+      <div id="msgs"></div>
+
+      <div id="chatform">
+        <input id="msgInput" placeholder="Type a message" autocomplete="off">
+        <button id="send">Send</button>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- Control bar -->
+  <footer>
+    <button id="mic">Mute</button>
+    <button id="cam">Camera on</button>
+    <button id="chatToggle">Hide chat</button>
+    <button id="leave">Leave</button>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
